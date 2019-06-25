@@ -57,11 +57,12 @@ class subscription_manager::install {
   #  - no ca_name
   #  - no identity
   #  - just install normally
-  package { $_pkg:
-    ensure   => 'present',
-    provider => 'rpm',
-    source   =>
-  "http://${_hostname}/pub/${_prefix}latest.noarch.rpm",
+  if $_prefix != '' and $_prefix != undef {
+    package { $_pkg:
+      ensure   => 'present',
+      provider => 'rpm',
+      source   => "http://${_hostname}/pub/${_prefix}latest.noarch.rpm",
+    }
   }
 
   # II. registered to correct server
